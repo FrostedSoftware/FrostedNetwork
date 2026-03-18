@@ -8,7 +8,11 @@
 <style>
 * {margin:0;padding:0;box-sizing:border-box;font-family:Inter, sans-serif;}
 
-body {background:#0f1117;color:white;}
+body {
+  background:#0f1117;
+  color:white;
+  overflow-x:hidden;
+}
 
 /* NAV */
 .nav {
@@ -24,51 +28,101 @@ body {background:#0f1117;color:white;}
   z-index:1000;
 }
 
-.logo {font-weight:700;font-size:20px;color:#00d1ff;cursor:pointer;}
+.logo {
+  font-weight:700;
+  font-size:20px;
+  color:#00d1ff;
+  cursor:pointer;
+}
+
+/* FIXED BUTTON LAYOUT */
+.nav-buttons {
+  display:flex;
+  gap:10px;
+}
 
 .nav-buttons button {
-  margin-left:10px;
   background:#00d1ff;
   border:none;
-  padding:8px 12px;
+  padding:8px 14px;
   border-radius:10px;
   cursor:pointer;
+  transition:0.25s;
+}
+
+.nav-buttons button:hover {
+  transform:scale(1.05);
+  box-shadow:0 0 10px #00d1ff;
 }
 
 /* HERO */
 .hero {
   margin-top:60px;
-  height:70vh;
+  min-height:70vh;
   display:flex;
   flex-direction:column;
   justify-content:center;
   align-items:center;
   text-align:center;
+  animation:fadeIn 0.6s ease;
 }
 
-.hero h1 {font-size:3rem;}
-.hero p {color:#aaa;margin:10px 0 20px;}
+.hero h1 {
+  font-size:3rem;
+  margin-bottom:10px;
+}
+
+.hero p {
+  color:#aaa;
+  margin-bottom:20px;
+}
+
+/* SCRIPT BOX */
+.script-box {
+  width:90%;
+  max-width:700px;
+  background:#1a1d26;
+  border-radius:12px;
+  padding:12px;
+  color:#00ffcc;
+  font-family:monospace;
+  margin-bottom:15px;
+  overflow-x:auto;
+  border:1px solid #00d1ff33;
+}
+
+/* BUTTONS */
+.copy-btn, .discord-btn {
+  padding:12px 18px;
+  border-radius:12px;
+  border:none;
+  cursor:pointer;
+  margin:5px;
+  transition:0.25s;
+}
 
 .copy-btn {
   background:#00d1ff;
-  border:none;
-  padding:12px 20px;
-  border-radius:12px;
-  cursor:pointer;
-  margin:5px;
 }
 
 .discord-btn {
   background:#5865F2;
-  border:none;
-  padding:12px 20px;
-  border-radius:12px;
-  cursor:pointer;
-  margin:5px;
+}
+
+.copy-btn:hover, .discord-btn:hover {
+  transform:scale(1.07);
+  box-shadow:0 0 12px rgba(0,209,255,0.5);
 }
 
 /* PAGE */
-.page {display:none;padding:100px 20px 60px;max-width:1000px;margin:auto;}
+.page {
+  display:none;
+  padding:100px 20px 60px;
+  max-width:1000px;
+  margin:auto;
+  animation:fadeIn 0.4s ease;
+}
+
 .page.active {display:block;}
 
 /* GRID */
@@ -87,8 +141,8 @@ body {background:#0f1117;color:white;}
 }
 
 .card:hover {
-  transform:translateY(-5px);
-  box-shadow:0 0 15px rgba(0,209,255,0.4);
+  transform:translateY(-6px) scale(1.02);
+  box-shadow:0 0 20px rgba(0,209,255,0.5);
 }
 
 /* OVERLAY */
@@ -102,17 +156,28 @@ body {background:#0f1117;color:white;}
   flex-direction:column;
   padding:80px 20px;
   z-index:2000;
+  animation:fadeIn 0.3s ease;
 }
 
 .overlay.active {display:flex;}
 
-.back {color:#00d1ff;margin-bottom:20px;cursor:pointer;}
+.back {
+  color:#00d1ff;
+  margin-bottom:20px;
+  cursor:pointer;
+}
 
+/* FEATURES */
 .feature {
   background:#1a1d26;
   padding:15px;
   border-radius:12px;
   margin-bottom:10px;
+  transition:0.2s;
+}
+
+.feature:hover {
+  background:#22263a;
 }
 
 /* UPDATE LOG */
@@ -121,13 +186,11 @@ body {background:#0f1117;color:white;}
   padding:12px;
   border-radius:12px;
   margin-bottom:10px;
+  transition:0.2s;
 }
 
-/* FOOTER */
-.footer {
-  text-align:center;
-  margin-top:40px;
-  color:#888;
+.update:hover {
+  background:#22263a;
 }
 
 /* HUB */
@@ -139,8 +202,14 @@ body {background:#0f1117;color:white;}
   padding:10px 15px;
   border-radius:12px;
   font-size:0.9em;
+  animation:fadeIn 0.6s ease;
 }
 
+/* ANIM */
+@keyframes fadeIn {
+  from {opacity:0; transform:translateY(10px);}
+  to {opacity:1; transform:translateY(0);}
+}
 </style>
 </head>
 
@@ -152,7 +221,6 @@ body {background:#0f1117;color:white;}
   <div class="nav-buttons">
     <button onclick="goPage('games')">Scripts</button>
     <button onclick="goPage('updates')">Updates</button>
-    <button onclick="copyUniversal()">Copy Script</button>
   </div>
 </div>
 
@@ -161,7 +229,10 @@ body {background:#0f1117;color:white;}
   <h1>FrostedNetwork</h1>
   <p>One script. Every game.</p>
 
-  <button class="copy-btn" onclick="copyUniversal()">Copy Universal Script</button>
+  <!-- SCRIPT TEXTBOX -->
+  <div class="script-box" id="scriptBox"></div>
+
+  <button class="copy-btn" onclick="copyUniversal()">Copy Script</button>
   <button class="discord-btn" onclick="joinDiscord()">Join Discord</button>
 
   <p style="margin-top:15px;color:#666;">Last updated: March 18, 2026</p>
@@ -177,12 +248,6 @@ body {background:#0f1117;color:white;}
       <p>Coin farm, ESP, utilities</p>
     </div>
   </div>
-
-  <div class="footer">
-    <br>
-    <button class="copy-btn" onclick="copyUniversal()">Copy Script</button>
-    <button class="discord-btn" onclick="joinDiscord()">Discord</button>
-  </div>
 </div>
 
 <!-- UPDATES -->
@@ -191,41 +256,43 @@ body {background:#0f1117;color:white;}
 
   <div class="update">
     <strong>March 18, 2026</strong>
-    <p>Initial release of FrostedNetwork hub. Added MM2 support.</p>
+    <p>Initial release of FrostedNetwork hub.</p>
   </div>
 
   <div class="update">
     <strong>March 17, 2026</strong>
-    <p>Core universal script framework completed.</p>
-  </div>
-
-  <div class="footer">
-    <button class="discord-btn" onclick="joinDiscord()">Join Discord</button>
+    <p>Universal script system created.</p>
   </div>
 </div>
 
-<!-- GAME VIEW -->
+<!-- OVERLAY -->
 <div class="overlay" id="gameView">
   <div class="back" onclick="closeGame()">← Back</div>
   <h2 id="gameTitle"></h2>
   <div id="features"></div>
 
   <br>
+  <div class="script-box" id="overlayScript"></div>
+
   <button class="copy-btn" onclick="copyUniversal()">Copy Script</button>
   <button class="discord-btn" onclick="joinDiscord()">Discord</button>
 </div>
 
 <!-- HUB -->
 <div class="hub">
-  FrostedNetwork • Active • Updated
+  FrostedNetwork • Active
 </div>
 
 <script>
 
-const UNIVERSAL_SCRIPT = `loadstring(game:HttpGet("https://yourlinkhere"))()`;
+const SCRIPT = `loadstring(game:HttpGet("https://yourlinkhere"))()`;
+
+/* SET TEXTBOX CONTENT */
+document.getElementById("scriptBox").innerText = SCRIPT;
+document.getElementById("overlayScript").innerText = SCRIPT;
 
 function copyUniversal(){
-  navigator.clipboard.writeText(UNIVERSAL_SCRIPT);
+  navigator.clipboard.writeText(SCRIPT);
   alert("Copied script");
 }
 
