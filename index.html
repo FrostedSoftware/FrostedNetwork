@@ -12,7 +12,7 @@
   /* Container */
   .hub-container {
     width: 95%;
-    max-width: 1000px;
+    max-width: 900px;
     background: rgba(30,30,40,0.95);
     border-radius: 20px;
     padding: 20px 30px;
@@ -55,8 +55,6 @@
   button { border:none; border-radius:10px; padding:6px 12px; cursor:pointer; font-weight:600; transition:0.2s; }
   button.copy { background:#00d1ff; color:#000; }
   button.copy:hover { background:#00b3cc; }
-  button.run { background:#28a745; color:#fff; }
-  button.run:hover { background:#1f7a30; }
 
   /* Always-on-screen hub panel */
   .hub-status {
@@ -81,13 +79,12 @@
 
   <!-- Tabs -->
   <div class="tabs">
-    <div class="tab active" data-tab="roblox">Roblox</div>
-    <div class="tab" data-tab="minecraft">Minecraft</div>
-    <div class="tab" data-tab="universal">Universal</div>
+    <div class="tab active" data-tab="mm2">MM2</div>
+    <div class="tab" data-tab="othergame">Other Game</div>
   </div>
 
   <!-- Tab content -->
-  <div class="tab-content active" id="roblox">
+  <div class="tab-content active" id="mm2">
     <div class="card">
       <div class="card-info">
         <h3>MM2 Coin Collector</h3>
@@ -95,43 +92,29 @@
       </div>
       <div class="card-buttons">
         <button class="copy" onclick="copyScript('print(\'MM2 Coin Collector Loaded!\')')">Copy</button>
-        <button class="run" onclick="runScript('print(\'MM2 Coin Collector Loaded!\')')">Run</button>
       </div>
     </div>
-    <!-- Add more Roblox features here -->
+    <!-- Add more MM2 scripts here -->
   </div>
 
-  <div class="tab-content" id="minecraft">
+  <div class="tab-content" id="othergame">
     <div class="card">
       <div class="card-info">
-        <h3>Auto-Mine Tool</h3>
-        <p>Automatically mines blocks in your Minecraft client. Last update: 03/18/2026</p>
+        <h3>Other Game Utility</h3>
+        <p>Utility script for another Roblox game. Last update: 03/18/2026</p>
       </div>
       <div class="card-buttons">
-        <button class="copy" onclick="copyScript('print(\'Auto-Mine Loaded!\')')">Copy</button>
-        <button class="run" onclick="runScript('print(\'Auto-Mine Loaded!\')')">Run</button>
+        <button class="copy" onclick="copyScript('print(\'Other Game Utility Loaded!\')')">Copy</button>
       </div>
     </div>
-  </div>
-
-  <div class="tab-content" id="universal">
-    <div class="card">
-      <div class="card-info">
-        <h3>Universal Script</h3>
-        <p>Load all features for supported games. Last update: 03/18/2026</p>
-      </div>
-      <div class="card-buttons">
-        <button class="copy" onclick="copyScript('print(\'Universal Script Loaded!\')')">Copy</button>
-        <button class="run" onclick="runScript('print(\'Universal Script Loaded!\')')">Run</button>
-      </div>
-    </div>
+    <!-- Add more scripts here -->
   </div>
 </div>
 
 <!-- Always-on-screen hub panel -->
 <div class="hub-status">
-  <p><strong>Status:</strong> Not Premium</p>
-  <p><strong>Key:</strong> None</p>
+  <p><strong>FrostedNetwork Hub</strong></p>
+  <p>Scripts available: 2</p>
 </div>
 
 <script>
@@ -151,13 +134,6 @@
   function copyScript(code){
     navigator.clipboard.writeText(code);
     alert('Script copied!');
-  }
-
-  // Run script (example, could integrate loadstring or client-side eval)
-  function runScript(code){
-    console.log('Running script:');
-    console.log(code);
-    alert('Script run simulated!');
   }
 </script>
 
