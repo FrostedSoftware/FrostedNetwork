@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FrostedNetwork</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #1e1e2f, #2e2e44);
+      color: #fff;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      max-width: 900px;
+      margin: 40px auto;
+      padding: 20px;
+      background-color: rgba(30,30,40,0.9);
+      border-radius: 16px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.5);
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .tabs {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+    .tab {
+      flex: 1;
+      padding: 10px;
+      background-color: #3a3a5c;
+      text-align: center;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    .tab.active {
+      background-color: #00d1ff;
+      color: #000;
+    }
+    .tab-content {
+      display: none;
+      animation: fadeIn 0.5s ease;
+    }
+    .tab-content.active {
+      display: block;
+    }
+    .card {
+      background-color: #2e2e44;
+      padding: 15px;
+      border-radius: 12px;
+      margin-bottom: 10px;
+    }
+    button.copy {
+      background: #00d1ff;
+      color: #000;
+      border: none;
+      padding: 8px 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      float: right;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>FrostedNetwork</h1>
+
+    <div class="tabs">
+      <div class="tab active" data-tab="roblox">Roblox Scripts</div>
+      <div class="tab" data-tab="minecraft">Minecraft Clients</div>
+      <div class="tab" data-tab="universal">Universal / Hub</div>
+    </div>
+
+    <div class="tab-content active" id="roblox">
+      <div class="card">
+        <span>Example Script A</span>
+        <button class="copy" data-code="-- Example Script A Code">Copy</button>
+      </div>
+    </div>
+
+    <div class
