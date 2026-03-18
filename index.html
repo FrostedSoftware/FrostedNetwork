@@ -64,6 +64,9 @@
       cursor: pointer;
       float: right;
     }
+    button.copy:hover {
+      background: #00a8cc;
+    }
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(-10px); }
       to { opacity: 1; transform: translateY(0); }
@@ -85,6 +88,63 @@
         <span>Example Script A</span>
         <button class="copy" data-code="-- Example Script A Code">Copy</button>
       </div>
+      <div class="card">
+        <span>Example Script B</span>
+        <button class="copy" data-code="-- Example Script B Code">Copy</button>
+      </div>
     </div>
 
-    <div class
+    <div class="tab-content" id="minecraft">
+      <div class="card">
+        <span>Example Client A</span>
+        <button class="copy" data-code="// Example Client A Code">Copy</button>
+      </div>
+      <div class="card">
+        <span>Example Client B</span>
+        <button class="copy" data-code="// Example Client B Code">Copy</button>
+      </div>
+    </div>
+
+    <div class="tab-content" id="universal">
+      <div class="card">
+        <span>Universal Hub</span>
+        <button class="copy" data-code="// Universal Hub Code">Copy</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Tab switching functionality
+    const tabs = document.querySelectorAll('.tab');
+    const tabContents = document.querySelectorAll('.tab-content');
+
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        const tabName = tab.getAttribute('data-tab');
+        
+        // Remove active class from all tabs and contents
+        tabs.forEach(t => t.classList.remove('active'));
+        tabContents.forEach(content => content.classList.remove('active'));
+        
+        // Add active class to clicked tab and corresponding content
+        tab.classList.add('active');
+        document.getElementById(tabName).classList.add('active');
+      });
+    });
+
+    // Copy button functionality
+    const copyButtons = document.querySelectorAll('.copy');
+    copyButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        const code = button.getAttribute('data-code');
+        navigator.clipboard.writeText(code).then(() => {
+          button.textContent = 'Copied!';
+          setTimeout(() => {
+            button.textContent = 'Copy';
+          }, 2000);
+        });
+      });
+    });
+  </script>
+</body>
+</html>
