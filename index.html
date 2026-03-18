@@ -3,138 +3,276 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>FrostedNetwork Hub</title>
+<title>FrostedNetwork</title>
+
 <style>
-  /* Base reset */
-  * { margin:0; padding:0; box-sizing:border-box; font-family: 'Segoe UI', sans-serif; }
-  body { background: linear-gradient(135deg,#1e1e2f,#2e2e44); color: #fff; min-height:100vh; display:flex; justify-content:center; align-items:flex-start; padding-top:40px; }
+* {margin:0;padding:0;box-sizing:border-box;font-family:Inter, sans-serif;}
 
-  /* Container */
-  .hub-container {
-    width: 95%;
-    max-width: 900px;
-    background: rgba(30,30,40,0.95);
-    border-radius: 20px;
-    padding: 20px 30px;
-    box-shadow: 0 0 35px rgba(0,0,0,0.5);
-    position: relative;
-    overflow: hidden;
-    animation: fadeIn 0.6s ease-out;
-  }
+body {
+  background:#0f1117;
+  color:white;
+  overflow-x:hidden;
+}
 
-  /* Header */
-  h1 { text-align:center; margin-bottom: 25px; font-weight: 600; font-size:2em; color:#00d1ff; }
+/* NAVBAR */
+.nav {
+  position:fixed;
+  top:0; left:0;
+  width:100%;
+  height:60px;
+  background:#151821;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 20px;
+  z-index:1000;
+}
 
-  /* Tabs */
-  .tabs { display:flex; gap:10px; flex-wrap:wrap; margin-bottom:20px; }
-  .tab { flex:1; background:#3a3a5c; padding:12px 0; border-radius:15px; text-align:center; cursor:pointer; transition:0.3s; user-select:none; }
-  .tab.active { background:#00d1ff; color:#000; }
+.logo {
+  font-weight:700;
+  font-size:20px;
+  color:#00d1ff;
+}
 
-  /* Tab content */
-  .tab-content { display:none; animation: fadeIn 0.4s ease; }
-  .tab-content.active { display:block; }
+.nav button {
+  background:#00d1ff;
+  border:none;
+  padding:8px 14px;
+  border-radius:10px;
+  cursor:pointer;
+}
 
-  /* Feature Cards */
-  .card {
-    background:#2e2e44;
-    border-radius:15px;
-    padding:15px;
-    margin-bottom:12px;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    transition: transform 0.25s, box-shadow 0.25s;
-  }
-  .card:hover { transform: scale(1.03); box-shadow:0 0 15px #00d1ff; }
+/* HERO (homepage like modrinth) */
+.hero {
+  margin-top:60px;
+  height:70vh;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  animation:fadeIn 0.6s ease;
+}
 
-  .card-info { flex:1; }
-  .card-info h3 { margin-bottom:5px; }
-  .card-info p { font-size:0.9em; color:#ccc; }
+.hero h1 {
+  font-size:3rem;
+  margin-bottom:10px;
+}
 
-  .card-buttons { display:flex; gap:8px; }
-  button { border:none; border-radius:10px; padding:6px 12px; cursor:pointer; font-weight:600; transition:0.2s; }
-  button.copy { background:#00d1ff; color:#000; }
-  button.copy:hover { background:#00b3cc; }
+.hero p {
+  color:#aaa;
+  margin-bottom:20px;
+}
 
-  /* Always-on-screen hub panel */
-  .hub-status {
-    position:fixed;
-    bottom:20px; right:20px;
-    background:#3a3a5c;
-    border-radius:15px;
-    padding:12px 20px;
-    box-shadow:0 0 15px rgba(0,0,0,0.5);
-    animation: fadeIn 0.6s ease-out;
-  }
-  .hub-status p { font-size:0.9em; margin-bottom:4px; }
+.copy-btn {
+  background:#00d1ff;
+  border:none;
+  padding:12px 20px;
+  border-radius:12px;
+  font-weight:600;
+  cursor:pointer;
+  transition:0.2s;
+}
+.copy-btn:hover {
+  transform:scale(1.05);
+}
 
-  /* Animations */
-  @keyframes fadeIn { from {opacity:0; transform: translateY(20px);} to {opacity:1; transform:translateY(0);} }
+/* PAGE CONTAINER */
+.page {
+  display:none;
+  padding:100px 20px 40px;
+  max-width:1000px;
+  margin:auto;
+}
+
+.page.active {
+  display:block;
+  animation:fadeIn 0.4s ease;
+}
+
+/* GAME GRID */
+.grid {
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(250px,1fr));
+  gap:15px;
+}
+
+.card {
+  background:#1a1d26;
+  padding:15px;
+  border-radius:15px;
+  cursor:pointer;
+  transition:0.25s;
+}
+
+.card:hover {
+  transform:translateY(-5px);
+  box-shadow:0 0 15px rgba(0,209,255,0.4);
+}
+
+.card h3 {margin-bottom:5px;}
+.card p {color:#aaa;font-size:0.9em;}
+
+/* OVERLAY PAGE */
+.overlay {
+  position:fixed;
+  top:0; left:0;
+  width:100%;
+  height:100%;
+  background:#0f1117;
+  display:none;
+  flex-direction:column;
+  padding:80px 20px;
+  z-index:2000;
+}
+
+.overlay.active {
+  display:flex;
+  animation:fadeIn 0.3s ease;
+}
+
+.back {
+  margin-bottom:20px;
+  cursor:pointer;
+  color:#00d1ff;
+}
+
+.feature {
+  background:#1a1d26;
+  padding:15px;
+  border-radius:12px;
+  margin-bottom:10px;
+}
+
+/* HUB STATUS */
+.hub {
+  position:fixed;
+  bottom:20px;
+  right:20px;
+  background:#1a1d26;
+  padding:10px 15px;
+  border-radius:12px;
+  font-size:0.9em;
+  color:#aaa;
+}
+
+/* ANIMATION */
+@keyframes fadeIn {
+  from {opacity:0; transform:translateY(10px);}
+  to {opacity:1; transform:translateY(0);}
+}
 </style>
 </head>
+
 <body>
 
-<div class="hub-container">
-  <h1>FrostedNetwork Hub</h1>
+<!-- NAV -->
+<div class="nav">
+  <div class="logo">FrostedNetwork</div>
+  <button onclick="goPage('games')">Scripts</button>
+</div>
 
-  <!-- Tabs -->
-  <div class="tabs">
-    <div class="tab active" data-tab="mm2">MM2</div>
-    <div class="tab" data-tab="othergame">Other Game</div>
-  </div>
+<!-- HOME -->
+<div class="hero page active" id="home">
+  <h1>FrostedNetwork</h1>
+  <p>Universal Roblox script hub. One script. All games.</p>
+  <button class="copy-btn" onclick="copyUniversal()">Copy Universal Script</button>
+</div>
 
-  <!-- Tab content -->
-  <div class="tab-content active" id="mm2">
-    <div class="card">
-      <div class="card-info">
-        <h3>MM2 Coin Collector</h3>
-        <p>Collect coins automatically in Murder Mystery 2. Last update: 03/18/2026</p>
-      </div>
-      <div class="card-buttons">
-        <button class="copy" onclick="copyScript('print(\'MM2 Coin Collector Loaded!\')')">Copy</button>
-      </div>
+<!-- GAMES PAGE -->
+<div class="page" id="games">
+  <h2 style="margin-bottom:15px;">Supported Games</h2>
+
+  <div class="grid">
+
+    <div class="card" onclick="openGame('mm2')">
+      <h3>MM2</h3>
+      <p>Coin farming, ESP, utilities</p>
     </div>
-    <!-- Add more MM2 scripts here -->
-  </div>
 
-  <div class="tab-content" id="othergame">
-    <div class="card">
-      <div class="card-info">
-        <h3>Other Game Utility</h3>
-        <p>Utility script for another Roblox game. Last update: 03/18/2026</p>
-      </div>
-      <div class="card-buttons">
-        <button class="copy" onclick="copyScript('print(\'Other Game Utility Loaded!\')')">Copy</button>
-      </div>
+    <div class="card" onclick="openGame('arsenal')">
+      <h3>Arsenal</h3>
+      <p>Aimbot, ESP, movement</p>
     </div>
-    <!-- Add more scripts here -->
+
   </div>
 </div>
 
-<!-- Always-on-screen hub panel -->
-<div class="hub-status">
-  <p><strong>FrostedNetwork Hub</strong></p>
-  <p>Scripts available: 2</p>
+<!-- GAME OVERLAY -->
+<div class="overlay" id="gameView">
+  <div class="back" onclick="closeGame()">← Back</div>
+  <h2 id="gameTitle"></h2>
+
+  <div id="features"></div>
+</div>
+
+<!-- HUB STATUS -->
+<div class="hub">
+  FrostedNetwork • Universal Script Ready
 </div>
 
 <script>
-  // Tab switching
-  const tabs = document.querySelectorAll('.tab');
-  const contents = document.querySelectorAll('.tab-content');
-  tabs.forEach(tab => {
-    tab.addEventListener('click', ()=>{
-      tabs.forEach(t=>t.classList.remove('active'));
-      contents.forEach(c=>c.classList.remove('active'));
-      tab.classList.add('active');
-      document.getElementById(tab.dataset.tab).classList.add('active');
-    });
+
+/* UNIVERSAL SCRIPT */
+const UNIVERSAL_SCRIPT = `loadstring(game:HttpGet("https://yourlinkhere"))()`;
+
+/* COPY */
+function copyUniversal(){
+  navigator.clipboard.writeText(UNIVERSAL_SCRIPT);
+  alert("Copied universal script");
+}
+
+/* PAGE NAV */
+function goPage(id){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+
+/* GAME DATA */
+const games = {
+  mm2: {
+    name:"Murder Mystery 2",
+    features:[
+      "Auto Coin Farm",
+      "Player ESP",
+      "Murderer Detection",
+      "Speed Utilities"
+    ]
+  },
+  arsenal: {
+    name:"Arsenal",
+    features:[
+      "Aimbot",
+      "ESP",
+      "Triggerbot",
+      "Movement Mods"
+    ]
+  }
+};
+
+/* OPEN GAME PAGE */
+function openGame(id){
+  const game = games[id];
+  document.getElementById("gameTitle").innerText = game.name;
+
+  const container = document.getElementById("features");
+  container.innerHTML = "";
+
+  game.features.forEach(f=>{
+    const div = document.createElement("div");
+    div.className = "feature";
+    div.innerText = f;
+    container.appendChild(div);
   });
 
-  // Copy script
-  function copyScript(code){
-    navigator.clipboard.writeText(code);
-    alert('Script copied!');
-  }
+  document.getElementById("gameView").classList.add("active");
+}
+
+/* CLOSE */
+function closeGame(){
+  document.getElementById("gameView").classList.remove("active");
+}
+
 </script>
 
 </body>
