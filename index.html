@@ -5,413 +5,285 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <title>FrostedNetwork</title>
 <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+
+<script>
+// ============================================================
+//  FROSTEDNETWORK CONFIG — EDIT THIS SECTION ONLY
+//  true = enabled/visible, false = disabled/hidden
+// ============================================================
+const CONFIG = {
+
+  // ── SITE INFO ──────────────────────────────────────────
+  siteName:    "FrostedNetwork",
+  tagline:     "One script. Every game. No mercy.",
+  slogan:      "Mercy is off by default.",
+  discord:     "https://discord.gg/FvfH8N9cDA",
+  version:     "v1.0",
+  lastUpdated: "March 19, 2026",
+
+  // ── UNIVERSAL SCRIPT (shown on homepage) ───────────────
+  universalScript: `loadstring(game:HttpGet("https://yourlinkhere"))()`,
+
+  // ── STATS STRIP ────────────────────────────────────────
+  stats: [
+    { num: "Free",   label: "Always"          },
+    { num: "v1.0",   label: "Current Version" },
+    { num: "∞",      label: "No Mercy"        },
+  ],
+
+  // ── GAMES ──────────────────────────────────────────────
+  // enabled: show/hide the card
+  // customScript: null = uses universal script, string = shows its own script
+  games: [
+    {
+      enabled:      false,
+      name:         "Murder Mystery 2",
+      icon:         "🔪",
+      desc:         "Coin farming, ESP, murderer detection, auto utilities and more.",
+      tags:         ["Farm", "ESP", "Combat", "Auto", "Soon"],
+      features:     [
+        "Auto Coin Farm",
+        "Avoid Murderer while farming",
+        "Auto Reset when bag full",
+        "ESP — see players through walls",
+        "Role Highlights (Red/Blue/Green)",
+        "Auto Kill All as Murderer",
+        "Auto Shoot Murderer",
+        "Dodge Knife",
+        "Fling Player",
+        "Auto End Round",
+        "Server Hop",
+        "Auto Rejoin",
+      ],
+      customScript: null,
+    },
+    {
+      enabled:      false,
+      name:         "Blox Fruits",
+      icon:         "⚔️",
+      desc:         "Coming soon. Join Discord for updates.",
+      tags:         ["Soon"],
+      features:     [],
+      customScript: null,
+    },
+    {
+      enabled:      false,
+      name:         "Brookhaven",
+      icon:         "🏘️",
+      desc:         "Coming soon. Join Discord for updates.",
+      tags:         ["Soon"],
+      features:     [],
+      customScript: null,
+    },
+    {
+      enabled:      false,
+      name:         "Arsenal",
+      icon:         "🎯",
+      desc:         "Coming soon. Join Discord for updates.",
+      tags:         ["Soon"],
+      features:     [],
+      customScript: null,
+    },
+  ],
+
+  // ── GENERAL SCRIPTS (Scripts tab) ──────────────────────
+  // These are universal utility scripts, not game-specific hubs
+  generalScripts: [
+    {
+      enabled:  true,
+      name:     "Infinite Yield",
+      desc:     "The most powerful admin commands script. Works in any game.",
+      script:   `loadstring(game:HttpGet("https://raw.githubusercontent.com/EdgeIY/infinite-yield/master/infinite-yield.lua"))()`,
+      tags:     ["Admin", "Commands", "Universal"],
+    },
+    {
+      enabled:  false,
+      name:     "FrostedNetwork Troll Hub",
+      desc:     "Speed, fly, noclip, fling, ESP and more. Works in any game.",
+      script:   `loadstring(game:HttpGet("https://yourlinkhere"))()`,
+      tags:     ["Troll", "Universal", "Free", "Soon"],
+    },
+    {
+      enabled:  false,
+      name:     "Dark Dex",
+      desc:     "Full explorer and remote spy. Works in any game.",
+      script:   `loadstring(game:HttpGet("https://yourlinkhere"))()`,
+      tags:     ["Explorer", "Universal"],
+    },
+  ],
+
+  // ── UPDATES ────────────────────────────────────────────
+  // type: "new" | "update" | "fix" | "soon"
+  updates: [
+    {
+      date:  "Mar 19, 2026",
+      type:  "soon",
+      title: "FrostedNetwork first script release.",
+      desc:  "Frostclient mm2 script!!"
+  ],
+
+};
+// ============================================================
+//  END OF CONFIG — DO NOT EDIT BELOW THIS LINE
+// ============================================================
+</script>
+
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 :root{
-  --bg:#080a0e;
-  --bg2:#0d1018;
-  --bg3:#121620;
-  --bg4:#181d28;
-  --accent:#00c8ff;
-  --accent2:#0077aa;
-  --accent3:#003355;
-  --glow:rgba(0,200,255,0.15);
-  --glowStrong:rgba(0,200,255,0.4);
-  --text:#dde8f0;
-  --text2:#6a8090;
-  --text3:#2a3545;
+  --bg:#080a0e;--bg2:#0d1018;--bg3:#121620;--bg4:#181d28;
+  --accent:#00c8ff;--accent2:#0077aa;--accent3:#003355;
+  --glow:rgba(0,200,255,0.12);--glowS:rgba(0,200,255,0.35);
+  --text:#dde8f0;--text2:#6a8090;--text3:#1e2a35;
   --discord:#5865f2;
+  --new:#00e87a;--update:#00c8ff;--fix:#ffcc00;--soon:#a855f7;
 }
-
 html{scroll-behavior:smooth}
-body{
-  background:var(--bg);
-  color:var(--text);
-  font-family:"DM Mono",monospace;
-  overflow-x:hidden;
-  min-height:100vh;
-  cursor:none;
-}
-
-/* Custom cursor */
-.cursor{
-  position:fixed;width:10px;height:10px;
-  background:var(--accent);border-radius:50%;
-  pointer-events:none;z-index:9999;
-  transform:translate(-50%,-50%);
-  transition:transform 0.1s,width 0.2s,height 0.2s,background 0.2s;
-  mix-blend-mode:screen;
-}
-.cursor-ring{
-  position:fixed;width:32px;height:32px;
-  border:1px solid var(--accent);border-radius:50%;
-  pointer-events:none;z-index:9998;
-  transform:translate(-50%,-50%);
-  opacity:0.4;
-  transition:transform 0.15s,width 0.25s,height 0.25s,opacity 0.2s;
-}
-body:hover .cursor{opacity:1}
-
-/* Noise overlay */
-body::before{
-  content:"";position:fixed;inset:0;
-  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
-  pointer-events:none;z-index:0;opacity:0.5;
-}
-
-/* Grid bg */
-body::after{
-  content:"";position:fixed;inset:0;
-  background-image:
-    linear-gradient(var(--text3) 1px,transparent 1px),
-    linear-gradient(90deg,var(--text3) 1px,transparent 1px);
-  background-size:60px 60px;
-  opacity:0.12;pointer-events:none;z-index:0;
-  mask-image:radial-gradient(ellipse 80% 80% at 50% 50%,black 40%,transparent 100%);
-}
+body{background:var(--bg);color:var(--text);font-family:"DM Mono",monospace;overflow-x:hidden;min-height:100vh;cursor:none}
+.cursor{position:fixed;width:10px;height:10px;background:var(--accent);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);mix-blend-mode:screen;transition:width .15s,height .15s}
+.cursor-ring{position:fixed;width:30px;height:30px;border:1px solid var(--accent);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);opacity:.35;transition:width .2s,height .2s}
+body::before{content:"";position:fixed;inset:0;background-image:linear-gradient(var(--text3) 1px,transparent 1px),linear-gradient(90deg,var(--text3) 1px,transparent 1px);background-size:60px 60px;opacity:.1;pointer-events:none;z-index:0;mask-image:radial-gradient(ellipse 80% 80% at 50% 50%,black 40%,transparent 100%)}
+::-webkit-scrollbar{width:4px}::-webkit-scrollbar-track{background:var(--bg2)}::-webkit-scrollbar-thumb{background:var(--accent2);border-radius:2px}
 
 /* NAV */
-.nav{
-  position:fixed;top:0;left:0;width:100%;z-index:100;
-  display:flex;align-items:center;justify-content:space-between;
-  padding:0 32px;height:58px;
-  background:rgba(8,10,14,0.85);
-  backdrop-filter:blur(20px);
-  border-bottom:1px solid var(--text3);
-}
-.nav-logo{
-  font-family:"Rajdhani",sans-serif;
-  font-size:20px;font-weight:700;
-  color:var(--accent);
-  letter-spacing:2px;text-transform:uppercase;
-  cursor:pointer;
-  display:flex;align-items:center;gap:10px;
-}
-.nav-logo-dot{
-  width:8px;height:8px;border-radius:50%;
-  background:var(--accent);
-  box-shadow:0 0 8px var(--accent);
-  animation:blink 2.5s ease-in-out infinite;
-}
-@keyframes blink{0%,100%{opacity:1}50%{opacity:0.3}}
-.nav-links{display:flex;align-items:center;gap:4px}
-.nav-link{
-  padding:7px 16px;border-radius:6px;
-  font-family:"DM Mono",monospace;font-size:11px;
-  color:var(--text2);background:none;border:none;
-  cursor:pointer;transition:all 0.2s;letter-spacing:1px;
-  text-transform:uppercase;
-}
+.nav{position:sticky;top:0;z-index:100;background:rgba(8,10,14,.9);border-bottom:1px solid var(--text3);padding:0 28px;height:56px;display:flex;align-items:center;justify-content:space-between;backdrop-filter:blur(20px)}
+.nav-logo{font-family:"Rajdhani",sans-serif;font-size:19px;font-weight:700;color:var(--accent);letter-spacing:2px;text-transform:uppercase;cursor:pointer;display:flex;align-items:center;gap:9px}
+.logo-dot{width:8px;height:8px;border-radius:50%;background:var(--accent);box-shadow:0 0 8px var(--accent);animation:blink 2.5s ease-in-out infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+.nav-links{display:flex;align-items:center;gap:2px}
+.nav-link{padding:6px 14px;border-radius:6px;font-size:11px;color:var(--text2);background:none;border:none;cursor:pointer;transition:all .2s;letter-spacing:1px;text-transform:uppercase;font-family:"DM Mono",monospace}
 .nav-link:hover,.nav-link.active{color:var(--accent);background:var(--accent3)}
-.nav-discord{
-  padding:7px 16px;border-radius:6px;
-  background:var(--discord);color:#fff;
-  border:none;cursor:pointer;
-  font-family:"DM Mono",monospace;font-size:11px;
-  letter-spacing:1px;text-transform:uppercase;
-  transition:all 0.2s;margin-left:8px;
-}
-.nav-discord:hover{opacity:0.85;transform:translateY(-1px)}
+.nav-discord{padding:6px 14px;border-radius:6px;background:var(--discord);color:#fff;border:none;cursor:pointer;font-family:"DM Mono",monospace;font-size:11px;letter-spacing:1px;text-transform:uppercase;transition:all .2s;margin-left:6px}
+.nav-discord:hover{opacity:.85;transform:translateY(-1px)}
 .hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:4px}
-.hamburger span{display:block;width:22px;height:2px;background:var(--text);border-radius:2px;transition:all 0.3s}
+.hamburger span{display:block;width:20px;height:2px;background:var(--text);border-radius:2px;transition:all .3s}
+.mobile-menu{display:none;position:fixed;top:56px;left:0;right:0;background:var(--bg2);border-bottom:1px solid var(--text3);padding:10px;z-index:99;flex-direction:column;gap:4px}
+.mobile-menu.open{display:flex}
+.mobile-link{padding:12px 16px;border-radius:6px;font-size:12px;color:var(--text2);cursor:pointer;letter-spacing:1px;text-transform:uppercase;background:none;border:none;text-align:left;font-family:"DM Mono",monospace;transition:all .2s}
+.mobile-link:hover,.mobile-link.active{color:var(--accent);background:var(--accent3)}
 
 /* PAGES */
-.page{display:none;position:relative;z-index:1}
-.page.active{display:block}
+.page{display:none;position:relative;z-index:1}.page.active{display:block}
 
 /* HERO */
-.hero{
-  min-height:100vh;display:flex;flex-direction:column;
-  align-items:center;justify-content:center;
-  text-align:center;padding:80px 24px 40px;
-  position:relative;
-}
-.hero-badge{
-  display:inline-flex;align-items:center;gap:8px;
-  border:1px solid var(--accent3);background:rgba(0,200,255,0.05);
-  border-radius:20px;padding:6px 16px;
-  font-size:10px;letter-spacing:2px;text-transform:uppercase;
-  color:var(--accent);margin-bottom:32px;
-  animation:fadeUp 0.6s ease both;
-}
+.hero{min-height:93vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:80px 20px 40px;position:relative}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--accent3);background:rgba(0,200,255,.05);border-radius:20px;padding:5px 14px;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--accent);margin-bottom:28px;animation:fadeUp .6s ease both}
 .hero-badge-dot{width:6px;height:6px;border-radius:50%;background:var(--accent);box-shadow:0 0 6px var(--accent)}
-.hero-title{
-  font-family:"Rajdhani",sans-serif;
-  font-size:clamp(52px,10vw,110px);
-  font-weight:700;line-height:0.9;
-  letter-spacing:-2px;
-  color:var(--text);
-  animation:fadeUp 0.6s 0.1s ease both;
-  margin-bottom:8px;
-}
-.hero-title span{
-  color:transparent;
-  -webkit-text-stroke:1px var(--accent);
-  text-shadow:0 0 40px var(--glowStrong);
-}
-.hero-sub{
-  font-size:12px;color:var(--text2);letter-spacing:3px;
-  text-transform:uppercase;margin-bottom:48px;
-  animation:fadeUp 0.6s 0.2s ease both;
-}
-.hero-script{
-  width:100%;max-width:680px;
-  background:var(--bg2);border:1px solid var(--text3);
-  border-radius:10px;padding:0;overflow:hidden;
-  margin-bottom:20px;
-  animation:fadeUp 0.6s 0.3s ease both;
-  box-shadow:0 0 40px rgba(0,0,0,0.4);
-}
-.hero-script-bar{
-  display:flex;align-items:center;justify-content:space-between;
-  padding:10px 16px;background:var(--bg3);border-bottom:1px solid var(--text3);
-}
-.hero-script-dots{display:flex;gap:6px}
-.hero-script-dot{width:10px;height:10px;border-radius:50%}
-.hero-script-label{font-size:10px;color:var(--text2);letter-spacing:1px}
-.hero-script-code{
-  padding:16px 20px;font-size:12px;
-  color:var(--accent);letter-spacing:0.5px;
-  text-align:left;line-height:1.6;word-break:break-all;
-}
-.hero-btns{
-  display:flex;gap:10px;flex-wrap:wrap;justify-content:center;
-  animation:fadeUp 0.6s 0.4s ease both;
-}
-.btn-primary{
-  padding:12px 28px;border-radius:8px;
-  background:var(--accent);color:#000;
-  border:none;cursor:pointer;
-  font-family:"Rajdhani",sans-serif;font-size:14px;font-weight:700;
-  letter-spacing:2px;text-transform:uppercase;
-  transition:all 0.2s;
-}
-.btn-primary:hover{box-shadow:0 0 24px var(--glowStrong);transform:translateY(-2px)}
-.btn-secondary{
-  padding:12px 28px;border-radius:8px;
-  background:transparent;color:var(--text);
-  border:1px solid var(--text3);cursor:pointer;
-  font-family:"Rajdhani",sans-serif;font-size:14px;font-weight:700;
-  letter-spacing:2px;text-transform:uppercase;
-  transition:all 0.2s;
-}
+.hero-title{font-family:"Rajdhani",sans-serif;font-size:clamp(52px,10vw,108px);font-weight:700;line-height:.92;letter-spacing:-2px;color:var(--text);animation:fadeUp .6s .1s ease both;margin-bottom:8px}
+.hero-title span{color:transparent;-webkit-text-stroke:1px var(--accent);text-shadow:0 0 40px var(--glowS)}
+.hero-sub{font-size:11px;color:var(--text2);letter-spacing:3px;text-transform:uppercase;margin-bottom:44px;animation:fadeUp .6s .2s ease both}
+.script-box{width:100%;max-width:660px;background:var(--bg2);border:1px solid var(--text3);border-radius:10px;overflow:hidden;margin-bottom:18px;animation:fadeUp .6s .3s ease both;box-shadow:0 0 40px rgba(0,0,0,.4)}
+.script-bar{display:flex;align-items:center;justify-content:space-between;padding:9px 14px;background:var(--bg3);border-bottom:1px solid var(--text3)}
+.script-dots{display:flex;gap:5px}
+.script-dot{width:10px;height:10px;border-radius:50%}
+.script-code{padding:14px 18px;font-size:11px;color:var(--accent);text-align:left;word-break:break-all;line-height:1.6}
+.hero-btns{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;animation:fadeUp .6s .4s ease both}
+.btn-primary{padding:11px 26px;border-radius:8px;background:var(--accent);color:#000;border:none;cursor:pointer;font-family:"Rajdhani",sans-serif;font-size:14px;font-weight:700;letter-spacing:2px;text-transform:uppercase;transition:all .2s}
+.btn-primary:hover{box-shadow:0 0 22px var(--glowS);transform:translateY(-2px)}
+.btn-secondary{padding:11px 26px;border-radius:8px;background:transparent;color:var(--text);border:1px solid var(--text3);cursor:pointer;font-family:"Rajdhani",sans-serif;font-size:14px;font-weight:700;letter-spacing:2px;text-transform:uppercase;transition:all .2s}
 .btn-secondary:hover{border-color:var(--accent2);color:var(--accent);transform:translateY(-2px)}
-.btn-discord{
-  padding:12px 28px;border-radius:8px;
-  background:var(--discord);color:#fff;
-  border:none;cursor:pointer;
-  font-family:"Rajdhani",sans-serif;font-size:14px;font-weight:700;
-  letter-spacing:2px;text-transform:uppercase;
-  transition:all 0.2s;
-}
-.btn-discord:hover{opacity:0.85;transform:translateY(-2px)}
-.hero-meta{
-  margin-top:28px;font-size:10px;color:var(--text3);letter-spacing:2px;
-  text-transform:uppercase;animation:fadeUp 0.6s 0.5s ease both;
-}
-.hero-glow{
-  position:absolute;top:20%;left:50%;transform:translateX(-50%);
-  width:600px;height:300px;
-  background:radial-gradient(ellipse,rgba(0,200,255,0.06) 0%,transparent 70%);
-  pointer-events:none;
-}
+.btn-discord{padding:11px 26px;border-radius:8px;background:var(--discord);color:#fff;border:none;cursor:pointer;font-family:"Rajdhani",sans-serif;font-size:14px;font-weight:700;letter-spacing:2px;text-transform:uppercase;transition:all .2s}
+.btn-discord:hover{opacity:.85;transform:translateY(-2px)}
+.hero-meta{margin-top:24px;font-size:10px;color:var(--text3);letter-spacing:2px;text-transform:uppercase;animation:fadeUp .6s .5s ease both}
+.hero-glow{position:absolute;top:20%;left:50%;transform:translateX(-50%);width:600px;height:280px;background:radial-gradient(ellipse,rgba(0,200,255,.06) 0%,transparent 70%);pointer-events:none}
 
-/* STATS STRIP */
-.stats-strip{
-  display:flex;justify-content:center;gap:0;
-  border-top:1px solid var(--text3);border-bottom:1px solid var(--text3);
-  background:var(--bg2);margin-bottom:0;
-  animation:fadeUp 0.6s 0.6s ease both;
-  position:relative;z-index:1;
-}
-.stat-item{
-  padding:18px 40px;text-align:center;
-  border-right:1px solid var(--text3);
-  flex:1;max-width:200px;
-}
+/* STATS */
+.stats-strip{display:flex;justify-content:center;border-top:1px solid var(--text3);border-bottom:1px solid var(--text3);background:var(--bg2);position:relative;z-index:1}
+.stat-item{padding:16px 40px;text-align:center;border-right:1px solid var(--text3);flex:1;max-width:200px}
 .stat-item:last-child{border-right:none}
-.stat-num{
-  font-family:"Rajdhani",sans-serif;font-size:26px;font-weight:700;
-  color:var(--accent);
-}
+.stat-num{font-family:"Rajdhani",sans-serif;font-size:24px;font-weight:700;color:var(--accent)}
 .stat-label{font-size:9px;color:var(--text2);letter-spacing:2px;text-transform:uppercase;margin-top:2px}
 
 /* SECTION */
-.section{
-  padding:80px 24px;max-width:1100px;margin:0 auto;
-  position:relative;z-index:1;
-}
-.section-tag{
-  font-size:10px;letter-spacing:3px;text-transform:uppercase;
-  color:var(--accent);margin-bottom:12px;
-}
-.section-title{
-  font-family:"Rajdhani",sans-serif;font-size:clamp(32px,5vw,52px);
-  font-weight:700;letter-spacing:-1px;margin-bottom:40px;
-  line-height:1.1;
-}
+.section{padding:72px 20px;max-width:1100px;margin:0 auto;position:relative;z-index:1}
+.section-tag{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--accent);margin-bottom:10px}
+.section-title{font-family:"Rajdhani",sans-serif;font-size:clamp(30px,5vw,50px);font-weight:700;letter-spacing:-1px;margin-bottom:36px;line-height:1.1}
 .section-title span{color:var(--accent)}
 
-/* GAMES GRID */
-.games-grid{
-  display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;
-}
-.game-card{
-  background:var(--bg2);border:1px solid var(--text3);
-  border-radius:12px;padding:24px;cursor:pointer;
-  transition:all 0.25s;position:relative;overflow:hidden;
-}
-.game-card::before{
-  content:"";position:absolute;inset:0;
-  background:linear-gradient(135deg,var(--glow),transparent);
-  opacity:0;transition:opacity 0.3s;
-}
-.game-card:hover{border-color:var(--accent2);transform:translateY(-4px);box-shadow:0 12px 40px rgba(0,0,0,0.4)}
+/* GAME CARDS */
+.games-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px}
+.game-card{background:var(--bg2);border:1px solid var(--text3);border-radius:12px;padding:22px;cursor:pointer;transition:all .25s;position:relative;overflow:hidden}
+.game-card::before{content:"";position:absolute;inset:0;background:linear-gradient(135deg,var(--glow),transparent);opacity:0;transition:opacity .3s}
+.game-card:hover{border-color:var(--accent2);transform:translateY(-4px);box-shadow:0 12px 40px rgba(0,0,0,.4)}
 .game-card:hover::before{opacity:1}
-.game-card-icon{font-size:28px;margin-bottom:14px}
-.game-card-name{
-  font-family:"Rajdhani",sans-serif;font-size:20px;font-weight:700;
-  letter-spacing:1px;margin-bottom:6px;
-}
-.game-card-desc{font-size:11px;color:var(--text2);line-height:1.6;margin-bottom:14px}
-.game-card-tags{display:flex;flex-wrap:wrap;gap:6px}
-.tag{
-  padding:3px 10px;border-radius:4px;font-size:9px;letter-spacing:1px;
-  text-transform:uppercase;border:1px solid var(--accent3);
-  color:var(--accent);background:rgba(0,200,255,0.05);
-}
-.game-card-arrow{
-  position:absolute;top:20px;right:20px;
-  color:var(--text3);font-size:18px;transition:all 0.2s;
-}
-.game-card:hover .game-card-arrow{color:var(--accent);transform:translate(2px,-2px)}
-.coming-soon{opacity:0.4;cursor:default}
-.coming-soon:hover{transform:none;box-shadow:none;border-color:var(--text3)}
+.game-card.disabled{opacity:.4;cursor:default}
+.game-card.disabled:hover{transform:none;box-shadow:none;border-color:var(--text3)}
+.game-icon{font-size:26px;margin-bottom:12px}
+.game-name{font-family:"Rajdhani",sans-serif;font-size:18px;font-weight:700;letter-spacing:1px;margin-bottom:6px}
+.game-desc{font-size:11px;color:var(--text2);line-height:1.6;margin-bottom:12px}
+.game-tags{display:flex;flex-wrap:wrap;gap:5px}
+.tag{padding:2px 9px;border-radius:4px;font-size:9px;letter-spacing:1px;text-transform:uppercase;border:1px solid var(--accent3);color:var(--accent);background:rgba(0,200,255,.05)}
+.tag.soon{border-color:rgba(168,85,247,.3);color:#a855f7;background:rgba(168,85,247,.05)}
+.game-arrow{position:absolute;top:18px;right:18px;color:var(--text3);font-size:16px;transition:all .2s}
+.game-card:hover .game-arrow{color:var(--accent);transform:translate(2px,-2px)}
 
-/* UPDATES */
-.updates-list{display:flex;flex-direction:column;gap:12px}
-.update-item{
-  background:var(--bg2);border:1px solid var(--text3);
-  border-radius:10px;padding:20px 24px;
-  display:flex;gap:20px;align-items:flex-start;
-  transition:border-color 0.2s;
-}
-.update-item:hover{border-color:var(--accent3)}
-.update-date{
-  font-size:10px;color:var(--accent);letter-spacing:1px;
-  white-space:nowrap;padding-top:2px;min-width:90px;
-}
-.update-content-title{font-family:"Rajdhani",sans-serif;font-size:16px;font-weight:700;margin-bottom:4px}
-.update-content-desc{font-size:11px;color:var(--text2);line-height:1.6}
-.update-badge{
-  padding:2px 10px;border-radius:20px;font-size:9px;
-  letter-spacing:1px;text-transform:uppercase;
-  display:inline-block;margin-bottom:6px;
-}
-.badge-new{background:rgba(0,200,255,0.1);color:var(--accent);border:1px solid var(--accent3)}
-.badge-fix{background:rgba(255,200,0,0.1);color:#ffc800;border:1px solid rgba(255,200,0,0.2)}
-.badge-update{background:rgba(100,200,100,0.1);color:#64c864;border:1px solid rgba(100,200,100,0.2)}
+/* SCRIPT CARDS (Scripts tab) */
+.scripts-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px}
+.script-card{background:var(--bg2);border:1px solid var(--text3);border-radius:12px;padding:22px;transition:all .25s}
+.script-card:hover{border-color:var(--accent2)}
+.script-card-name{font-family:"Rajdhani",sans-serif;font-size:18px;font-weight:700;margin-bottom:6px}
+.script-card-desc{font-size:11px;color:var(--text2);line-height:1.6;margin-bottom:14px}
+.script-card-box{background:var(--bg3);border:1px solid var(--text3);border-radius:6px;padding:10px 14px;font-size:10px;color:var(--accent);word-break:break-all;margin-bottom:10px;line-height:1.6;max-height:60px;overflow:hidden}
+.script-copy-btn{width:100%;padding:9px;border-radius:6px;background:var(--accent3);color:var(--accent);border:1px solid var(--accent2);cursor:pointer;font-family:"DM Mono",monospace;font-size:11px;letter-spacing:1px;text-transform:uppercase;transition:all .2s}
+.script-copy-btn:hover{background:var(--accent2);color:#fff}
 
 /* OVERLAY */
-.overlay{
-  position:fixed;inset:0;z-index:500;
-  background:var(--bg);
-  display:none;flex-direction:column;
-  padding:80px 24px 40px;overflow-y:auto;
-  animation:slideUp 0.3s ease;
-}
+.overlay{position:fixed;inset:0;z-index:500;background:var(--bg);display:none;flex-direction:column;padding:72px 20px 40px;overflow-y:auto;animation:slideUp .3s ease}
 .overlay.active{display:flex}
-@keyframes slideUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
-.overlay-inner{max-width:900px;width:100%;margin:0 auto}
-.overlay-back{
-  display:inline-flex;align-items:center;gap:8px;
-  color:var(--accent);font-size:11px;letter-spacing:1px;
-  text-transform:uppercase;cursor:pointer;margin-bottom:32px;
-  background:none;border:none;
-  transition:gap 0.2s;
-}
+@keyframes slideUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+.overlay-inner{max-width:880px;width:100%;margin:0 auto}
+.overlay-back{display:inline-flex;align-items:center;gap:8px;color:var(--accent);font-size:11px;letter-spacing:1px;text-transform:uppercase;cursor:pointer;margin-bottom:28px;background:none;border:none;transition:gap .2s}
 .overlay-back:hover{gap:12px}
-.overlay-title{
-  font-family:"Rajdhani",sans-serif;font-size:40px;font-weight:700;
-  letter-spacing:-1px;margin-bottom:8px;
-}
-.overlay-meta{font-size:11px;color:var(--text2);margin-bottom:32px;letter-spacing:1px}
-.features-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px;margin-bottom:32px}
-.feature-item{
-  background:var(--bg2);border:1px solid var(--text3);
-  border-radius:8px;padding:14px;
-  display:flex;align-items:flex-start;gap:10px;
-  transition:border-color 0.2s;
-}
+.overlay-title{font-family:"Rajdhani",sans-serif;font-size:38px;font-weight:700;letter-spacing:-1px;margin-bottom:6px}
+.overlay-meta{font-size:11px;color:var(--text2);margin-bottom:28px;letter-spacing:1px}
+.features-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:8px;margin-bottom:28px}
+.feature-item{background:var(--bg2);border:1px solid var(--text3);border-radius:8px;padding:12px;display:flex;align-items:flex-start;gap:8px;transition:border-color .2s}
 .feature-item:hover{border-color:var(--accent3)}
-.feature-dot{width:6px;height:6px;border-radius:50%;background:var(--accent);margin-top:4px;flex-shrink:0;box-shadow:0 0 6px var(--accent)}
+.feature-dot{width:6px;height:6px;border-radius:50%;background:var(--accent);margin-top:4px;flex-shrink:0;box-shadow:0 0 5px var(--accent)}
 .feature-text{font-size:11px;line-height:1.5}
+.overlay-script-box{background:var(--bg2);border:1px solid var(--text3);border-radius:10px;overflow:hidden;margin-bottom:18px}
+
+/* UPDATES */
+.updates-list{display:flex;flex-direction:column;gap:10px}
+.update-item{background:var(--bg2);border:1px solid var(--text3);border-radius:10px;padding:18px 22px;display:flex;gap:18px;align-items:flex-start;transition:border-color .2s}
+.update-item:hover{border-color:var(--accent3)}
+.update-date{font-size:10px;color:var(--accent);letter-spacing:1px;white-space:nowrap;padding-top:2px;min-width:86px}
+.update-badge{padding:2px 9px;border-radius:20px;font-size:9px;letter-spacing:1px;text-transform:uppercase;display:inline-block;margin-bottom:5px}
+.badge-new{background:rgba(0,232,122,.1);color:var(--new);border:1px solid rgba(0,232,122,.25)}
+.badge-update{background:rgba(0,200,255,.1);color:var(--update);border:1px solid rgba(0,200,255,.25)}
+.badge-fix{background:rgba(255,204,0,.1);color:var(--fix);border:1px solid rgba(255,204,0,.25)}
+.badge-soon{background:rgba(168,85,247,.1);color:var(--soon);border:1px solid rgba(168,85,247,.25)}
+.update-title{font-family:"Rajdhani",sans-serif;font-size:15px;font-weight:700;margin-bottom:4px}
+.update-desc{font-size:11px;color:var(--text2);line-height:1.6}
 
 /* FOOTER */
-.footer{
-  border-top:1px solid var(--text3);padding:32px 24px;
-  text-align:center;position:relative;z-index:1;
-  background:var(--bg2);
-}
-.footer-logo{
-  font-family:"Rajdhani",sans-serif;font-size:18px;font-weight:700;
-  color:var(--accent);letter-spacing:2px;margin-bottom:8px;
-}
+.footer{border-top:1px solid var(--text3);padding:28px 20px;text-align:center;position:relative;z-index:1;background:var(--bg2)}
+.footer-logo{font-family:"Rajdhani",sans-serif;font-size:17px;font-weight:700;color:var(--accent);letter-spacing:2px;margin-bottom:6px}
 .footer-slogan{font-size:10px;color:var(--text3);letter-spacing:3px;text-transform:uppercase}
-.footer-links{display:flex;justify-content:center;gap:20px;margin-top:16px}
-.footer-link{font-size:10px;color:var(--text2);letter-spacing:1px;text-transform:uppercase;cursor:pointer;transition:color 0.2s}
+.footer-links{display:flex;justify-content:center;gap:18px;margin-top:14px}
+.footer-link{font-size:10px;color:var(--text2);letter-spacing:1px;text-transform:uppercase;cursor:pointer;transition:color .2s;background:none;border:none}
 .footer-link:hover{color:var(--accent)}
 
 /* TOAST */
-.toast-container{position:fixed;bottom:24px;right:24px;z-index:1000;display:flex;flex-direction:column;gap:8px}
-.toast{
-  background:var(--bg2);border:1px solid var(--text3);
-  border-radius:8px;padding:12px 18px;
-  font-size:11px;min-width:200px;
-  animation:toastIn 0.3s ease;
-  border-left:3px solid var(--accent);
-}
-.toast.success{border-left-color:var(--accent)}
-.toast.error{border-left-color:#ff4455}
-@keyframes toastIn{from{opacity:0;transform:translateX(20px)}to{opacity:1;transform:translateX(0)}}
-
-/* MOBILE NAV */
-.mobile-menu{
-  display:none;position:fixed;top:58px;left:0;right:0;
-  background:var(--bg2);border-bottom:1px solid var(--text3);
-  padding:12px;z-index:99;flex-direction:column;gap:4px;
-}
-.mobile-menu.open{display:flex}
-.mobile-link{
-  padding:12px 16px;border-radius:6px;font-size:12px;
-  color:var(--text2);cursor:pointer;letter-spacing:1px;text-transform:uppercase;
-  background:none;border:none;text-align:left;
-  font-family:"DM Mono",monospace;transition:all 0.2s;
-}
-.mobile-link:hover,.mobile-link.active{color:var(--accent);background:var(--accent3)}
+.toast-container{position:fixed;bottom:20px;right:20px;z-index:1000;display:flex;flex-direction:column;gap:7px}
+.toast{background:var(--bg2);border:1px solid var(--text3);border-radius:8px;padding:11px 16px;font-size:11px;min-width:190px;animation:toastIn .3s ease;border-left:3px solid var(--accent)}
+@keyframes toastIn{from{opacity:0;transform:translateX(18px)}to{opacity:1;transform:translateX(0)}}
 
 /* ANIMS */
-@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
 
 /* RESPONSIVE */
 @media(max-width:768px){
-  .nav{padding:0 16px}
-  .nav-links,.nav-discord{display:none}
-  .hamburger{display:flex}
-  .stats-strip{flex-wrap:wrap}
-  .stat-item{min-width:50%;border-right:none;border-bottom:1px solid var(--text3)}
-  .stat-item:last-child{border-bottom:none}
-  .hero-title{letter-spacing:-1px}
-  .hero-script-code{font-size:10px;padding:12px 14px}
-  .section{padding:60px 16px}
-  body{cursor:auto}
-  .cursor,.cursor-ring{display:none}
-  .update-item{flex-direction:column;gap:6px}
+  .nav{padding:0 14px}.nav-links,.nav-discord{display:none}.hamburger{display:flex}
+  .stats-strip{flex-wrap:wrap}.stat-item{min-width:50%;border-right:none;border-bottom:1px solid var(--text3)}.stat-item:last-child{border-bottom:none}
+  .hero-title{letter-spacing:-1px}.section{padding:50px 14px}
+  body{cursor:auto}.cursor,.cursor-ring{display:none}
+  .update-item{flex-direction:column;gap:5px}
 }
 @media(max-width:480px){
   .stat-item{min-width:100%}
-  .hero-btns{flex-direction:column;align-items:stretch;width:100%;max-width:320px}
-  .btn-primary,.btn-secondary,.btn-discord{width:100%;text-align:center}
+  .hero-btns{flex-direction:column;align-items:stretch;width:100%;max-width:300px}
+  .btn-primary,.btn-secondary,.btn-discord{text-align:center}
 }
 </style>
 </head>
@@ -420,308 +292,255 @@ body::after{
 <div class="cursor" id="cursor"></div>
 <div class="cursor-ring" id="cursorRing"></div>
 
-<!-- NAV -->
 <nav class="nav">
   <div class="nav-logo" onclick="goPage('home')">
-    <div class="nav-logo-dot"></div>
-    FrostedNetwork
+    <div class="logo-dot"></div>
+    <span id="navLogo"></span>
   </div>
   <div class="nav-links">
     <button class="nav-link active" id="nav-home" onclick="goPage('home')">Home</button>
-    <button class="nav-link" id="nav-games" onclick="goPage('games')">Scripts</button>
-    <button class="nav-link" id="nav-updates" onclick="goPage('updates')">Updates</button>
-    <button class="nav-discord" onclick="joinDiscord()">Discord</button>
+    <button class="nav-link" id="nav-games" onclick="goPage('games')">Games</button>
+    <button class="nav-link" id="nav-scripts" onclick="goPage('scripts')">Scripts</button>
+    <button class="nav-link" id="nav-updates" onclick="goPage('updates')">Updates</button
+                                                                  <button class="nav-discord" id="navDiscordBtn">Discord</button>
   </div>
   <div class="hamburger" id="hamburger" onclick="toggleMenu()">
     <span></span><span></span><span></span>
   </div>
 </nav>
 
-<!-- MOBILE MENU -->
 <div class="mobile-menu" id="mobileMenu">
   <button class="mobile-link active" id="mnav-home" onclick="goPage('home');toggleMenu()">Home</button>
-  <button class="mobile-link" id="mnav-games" onclick="goPage('games');toggleMenu()">Scripts</button>
+  <button class="mobile-link" id="mnav-games" onclick="goPage('games');toggleMenu()">Games</button>
+  <button class="mobile-link" id="mnav-scripts" onclick="goPage('scripts');toggleMenu()">Scripts</button>
   <button class="mobile-link" id="mnav-updates" onclick="goPage('updates');toggleMenu()">Updates</button>
-  <button class="mobile-link" onclick="joinDiscord();toggleMenu()">Discord</button>
+  <button class="mobile-link" onclick="window.open(CONFIG.discord,'_blank');toggleMenu()">Discord</button>
 </div>
 
-<!-- HOME PAGE -->
+<!-- HOME -->
 <div class="page active" id="page-home">
   <section class="hero">
     <div class="hero-glow"></div>
-    <div class="hero-badge"><div class="hero-badge-dot"></div>FrostedSoftware.gg — Now Live</div>
-    <h1 class="hero-title">Frosted<span>Network</span></h1>
-    <p class="hero-sub">One script. Every game. No mercy.</p>
-
-    <div class="hero-script">
-      <div class="hero-script-bar">
-        <div class="hero-script-dots">
-          <div class="hero-script-dot" style="background:#ff5f57"></div>
-          <div class="hero-script-dot" style="background:#febc2e"></div>
-          <div class="hero-script-dot" style="background:#28c840"></div>
+    <div class="hero-badge"><div class="hero-badge-dot"></div><span id="heroBadge"></span></div>
+    <h1 class="hero-title" id="heroTitle"></h1>
+    <p class="hero-sub" id="heroSub"></p>
+    <div class="script-box">
+      <div class="script-bar">
+        <div class="script-dots">
+          <div class="script-dot" style="background:#ff5f57"></div>
+          <div class="script-dot" style="background:#febc2e"></div>
+          <div class="script-dot" style="background:#28c840"></div>
         </div>
-        <div class="hero-script-label">Universal Loader</div>
+        <div style="font-size:10px;color:var(--text2)">Universal Loader</div>
         <div style="font-size:10px;color:var(--text2)">Lua</div>
       </div>
-      <div class="hero-script-code" id="scriptDisplay">loadstring(game:HttpGet("https://yourlinkhere"))() </div>
+      <div class="script-code" id="heroScript"></div>
     </div>
-
     <div class="hero-btns">
-      <button class="btn-primary" onclick="copyScript()">Copy Script</button>
-      <button class="btn-secondary" onclick="goPage('games')">View Scripts</button>
-      <button class="btn-discord" onclick="joinDiscord()">Discord</button>
+      <button class="btn-primary" onclick="copyScript(CONFIG.universalScript)">Copy Script</button>
+      <button class="btn-secondary" onclick="goPage('games')">View Games</button>
+      <button class="btn-discord" id="heroDiscordBtn">Discord</button>
     </div>
-    <div class="hero-meta">FrostedSoftware.gg &nbsp;·&nbsp; Mercy is off by default &nbsp;·&nbsp; Free forever</div>
+    <div class="hero-meta" id="heroMeta"></div>
   </section>
-
-  <div class="stats-strip">
-    <div class="stat-item">
-      <div class="stat-num">1</div>
-      <div class="stat-label">Supported Game</div>
-    </div>
-    <div class="stat-item">
-      <div class="stat-num">Free</div>
-      <div class="stat-label">Always</div>
-    </div>
-    <div class="stat-item">
-      <div class="stat-num">v1.0</div>
-      <div class="stat-label">Current Version</div>
-    </div>
-    <div class="stat-item">
-      <div class="stat-num">∞</div>
-      <div class="stat-label">No Mercy</div>
-    </div>
-  </div>
+  <div class="stats-strip" id="statsStrip"></div>
 </div>
 
-<!-- SCRIPTS PAGE -->
+<!-- GAMES -->
 <div class="page" id="page-games">
   <div class="section">
-    <div class="section-tag">// Scripts</div>
-    <h2 class="section-title">Supported <span>Games</span></h2>
-    <div class="games-grid">
-      <div class="game-card" onclick="openGame('mm2')">
-        <div class="game-card-icon">🔪</div>
-        <div class="game-card-name">Murder Mystery 2</div>
-        <div class="game-card-desc">Coin farming, ESP, murderer detection, auto utilities and more.</div>
-        <div class="game-card-tags">
-          <span class="tag">Farm</span>
-          <span class="tag">ESP</span>
-          <span class="tag">Combat</span>
-          <span class="tag">Auto</span>
-        </div>
-        <div class="game-card-arrow">↗</div>
-      </div>
-      <div class="game-card coming-soon">
-        <div class="game-card-icon">⚔️</div>
-        <div class="game-card-name">Blox Fruits</div>
-        <div class="game-card-desc">Coming soon. Join Discord for updates.</div>
-        <div class="game-card-tags"><span class="tag">Soon</span></div>
-      </div>
-      <div class="game-card coming-soon">
-        <div class="game-card-icon">🏘️</div>
-        <div class="game-card-name">Brookhaven</div>
-        <div class="game-card-desc">Coming soon. Join Discord for updates.</div>
-        <div class="game-card-tags"><span class="tag">Soon</span></div>
-      </div>
-      <div class="game-card coming-soon">
-        <div class="game-card-icon">🎯</div>
-        <div class="game-card-name">Arsenal</div>
-        <div class="game-card-desc">Coming soon. Join Discord for updates.</div>
-        <div class="game-card-tags"><span class="tag">Soon</span></div>
-      </div>
-    </div>
+    <div class="section-tag">// Supported Games</div>
+    <h2 class="section-title">Game <span>Hubs</span></h2>
+    <div class="games-grid" id="gamesGrid"></div>
   </div>
 </div>
 
-<!-- UPDATES PAGE -->
+<!-- SCRIPTS -->
+<div class="page" id="page-scripts">
+  <div class="section">
+    <div class="section-tag">// Universal Scripts</div>
+    <h2 class="section-title">General <span>Scripts</span></h2>
+    <p style="font-size:11px;color:var(--text2);margin-bottom:28px;letter-spacing:.5px">These scripts work in any Roblox game. Not game-specific hubs.</p>
+    <div class="scripts-grid" id="scriptsGrid"></div>
+  </div>
+</div>
+
+<!-- UPDATES -->
 <div class="page" id="page-updates">
   <div class="section">
     <div class="section-tag">// Changelog</div>
     <h2 class="section-title">Update <span>Log</span></h2>
-    <div class="updates-list">
-      <div class="update-item">
-        <div class="update-date">Mar 18 2026</div>
-        <div>
-          <div class="update-badge badge-new">New</div>
-          <div class="update-content-title">FrostedNetwork v1.0 — Initial Release</div>
-          <div class="update-content-desc">Full hub launch with MM2 support. Key system, tabbed GUI, ESP, coin farm, combat modules, control panel, settings and Info tab. FrostClient Minecraft client in development.</div>
-        </div>
-      </div>
-      <div class="update-item">
-        <div class="update-date">Mar 17 2026</div>
-        <div>
-          <div class="update-badge badge-update">Update</div>
-          <div class="update-content-title">Universal Script System</div>
-          <div class="update-content-desc">Migrated from individual scripts to a unified hub loader. Single loadstring runs everything. Game auto-detection added.</div>
-        </div>
-      </div>
-      <div class="update-item">
-        <div class="update-date">Mar 15 2026</div>
-        <div>
-          <div class="update-badge badge-fix">Fix</div>
-          <div class="update-content-title">GUI Compatibility Fix</div>
-          <div class="update-content-desc">Fixed Delta executor GUI parent issue. Script now shows on both mobile Delta and BlueStacks.</div>
-        </div>
-      </div>
-    </div>
+    <div class="updates-list" id="updatesList"></div>
   </div>
 </div>
 
 <!-- GAME OVERLAY -->
 <div class="overlay" id="gameOverlay">
   <div class="overlay-inner">
-    <button class="overlay-back" onclick="closeGame()">← Back to Scripts</button>
+    <button class="overlay-back" onclick="closeGame()">← Back to Games</button>
     <div class="overlay-title" id="overlayTitle"></div>
     <div class="overlay-meta" id="overlayMeta"></div>
     <div class="features-grid" id="overlayFeatures"></div>
-
-    <div class="hero-script" style="margin-bottom:20px">
-      <div class="hero-script-bar">
-        <div class="hero-script-dots">
-          <div class="hero-script-dot" style="background:#ff5f57"></div>
-          <div class="hero-script-dot" style="background:#febc2e"></div>
-          <div class="hero-script-dot" style="background:#28c840"></div>
+    <div class="overlay-script-box">
+      <div class="script-bar">
+        <div class="script-dots">
+          <div class="script-dot" style="background:#ff5f57"></div>
+          <div class="script-dot" style="background:#febc2e"></div>
+          <div class="script-dot" style="background:#28c840"></div>
         </div>
-        <div class="hero-script-label">Paste into Delta</div>
+        <div style="font-size:10px;color:var(--text2)">Paste into Delta</div>
       </div>
-      <div class="hero-script-code" id="overlayScript"></div>
+      <div class="script-code" id="overlayScript"></div>
     </div>
-
     <div style="display:flex;gap:10px;flex-wrap:wrap">
-      <button class="btn-primary" onclick="copyScript()">Copy Script</button>
-      <button class="btn-discord" onclick="joinDiscord()">Get Key on Discord</button>
+      <button class="btn-primary" id="overlayScriptBtn">Copy Script</button>
+      <button class="btn-discord" onclick="window.open(CONFIG.discord,'_blank')">Discord</button>
     </div>
   </div>
 </div>
 
-<!-- FOOTER -->
 <footer class="footer">
-  <div class="footer-logo">FrostedNetwork</div>
-  <div class="footer-slogan">Mercy is off by default</div>
+  <div class="footer-logo" id="footerLogo"></div>
+  <div class="footer-slogan" id="footerSlogan"></div>
   <div class="footer-links">
-    <span class="footer-link" onclick="goPage('home')">Home</span>
-    <span class="footer-link" onclick="goPage('games')">Scripts</span>
-    <span class="footer-link" onclick="goPage('updates')">Updates</span>
-    <span class="footer-link" onclick="joinDiscord()">Discord</span>
+    <button class="footer-link" onclick="goPage('home')">Home</button>
+    <button class="footer-link" onclick="goPage('games')">Games</button>
+    <button class="footer-link" onclick="goPage('scripts')">Scripts</button>
+    <button class="footer-link" onclick="goPage('updates')">Updates</button>
+    <button class="footer-link" onclick="window.open(CONFIG.discord,'_blank')">Discord</button>
   </div>
-  <div style="margin-top:16px;font-size:9px;color:var(--text3);letter-spacing:2px">
-    © 2026 FROSTEDSOFTWARE.GG — ALL RIGHTS RESERVED
-  </div>
+  <div style="margin-top:14px;font-size:9px;color:var(--text3);letter-spacing:2px">© 2026 FROSTEDSOFTWARE.GG — ALL RIGHTS RESERVED</div>
 </footer>
 
-<!-- TOASTS -->
 <div class="toast-container" id="toastContainer"></div>
 
 <script>
-const SCRIPT = `loadstring(game:HttpGet("https://yourlinkhere"))()`;
-const DISCORD = "https://discord.gg/FvfH8N9cDA";
+// ── BUILD FROM CONFIG ──────────────────────────────────────────────────────
 
-const GAMES = {
-  mm2: {
-    name: "Murder Mystery 2",
-    meta: "Updated March 18, 2026  ·  Works on Delta, Arceus X  ·  Key required",
-    features: [
-      "Coin Farm with speed control",
-      "Avoid Murderer while farming",
-      "Auto Reset when bag full",
-      "ESP — see players through walls",
-      "Role Highlights (Red/Blue/Green)",
-      "Auto Kill All as Murderer",
-      "Auto Shoot Murderer",
-      "Dodge Knife",
-      "Fling Player",
-      "Auto End Round",
-      "Server Hop",
-      "Auto Rejoin",
-      "Session Stats tracking",
-      "Premium features coming soon"
-    ]
-  }
-};
+// Nav / branding
+document.getElementById("navLogo").textContent = CONFIG.siteName;
+document.getElementById("navDiscordBtn").onclick = () => window.open(CONFIG.discord, "_blank");
+document.getElementById("heroDiscordBtn").onclick = () => window.open(CONFIG.discord, "_blank");
+document.getElementById("footerLogo").textContent = CONFIG.siteName;
+document.getElementById("footerSlogan").textContent = CONFIG.slogan;
 
-// Set script display
-document.getElementById("scriptDisplay").textContent = SCRIPT;
-document.getElementById("overlayScript").textContent = SCRIPT;
+// Hero
+document.getElementById("heroBadge").textContent = CONFIG.siteName + ".gg — Now Live";
+document.getElementById("heroTitle").innerHTML = CONFIG.siteName.replace("Frosted","Frosted<span>") + "</span>";
+document.getElementById("heroSub").textContent = CONFIG.tagline;
+document.getElementById("heroScript").textContent = CONFIG.universalScript;
+document.getElementById("heroMeta").textContent = "FrostedSoftware.gg  ·  " + CONFIG.slogan + "  ·  Free forever";
 
-// Pages
-function goPage(id) {
-  document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
-  document.querySelectorAll(".nav-link").forEach(n => n.classList.remove("active"));
-  document.querySelectorAll(".mobile-link").forEach(n => n.classList.remove("active"));
-  document.getElementById("page-" + id).classList.add("active");
-  const navBtn = document.getElementById("nav-" + id);
-  const mnavBtn = document.getElementById("mnav-" + id);
-  if (navBtn) navBtn.classList.add("active");
-  if (mnavBtn) mnavBtn.classList.add("active");
-  window.scrollTo(0, 0);
+// Stats
+const statsEl = document.getElementById("statsStrip");
+CONFIG.stats.forEach(s => {
+  statsEl.innerHTML += `<div class="stat-item"><div class="stat-num">${s.num}</div><div class="stat-label">${s.label}</div></div>`;
+});
+
+// Games grid
+const gamesEl = document.getElementById("gamesGrid");
+CONFIG.games.forEach((g, i) => {
+  const disabled = !g.enabled;
+  const tagsHtml = g.tags.map(t => `<span class="tag${t==="Soon"?" soon":""}">${t}</span>`).join("");
+  gamesEl.innerHTML += `
+    <div class="game-card${disabled?" disabled":""}" ${!disabled?`onclick="openGame(${i})"`:"" }>
+      <div class="game-icon">${g.icon}</div>
+      <div class="game-name">${g.name}</div>
+      <div class="game-desc">${g.desc}</div>
+      <div class="game-tags">${tagsHtml}</div>
+      ${!disabled?'<div class="game-arrow">↗</div>':""}
+    </div>`;
+});
+
+// Scripts grid
+const scriptsEl = document.getElementById("scriptsGrid");
+CONFIG.generalScripts.filter(s => s.enabled).forEach(s => {
+  const tagsHtml = s.tags.map(t => `<span class="tag">${t}</span>`).join("");
+  scriptsEl.innerHTML += `
+    <div class="script-card">
+      <div class="script-card-name">${s.name}</div>
+      <div class="script-card-desc">${s.desc}</div>
+      <div class="game-tags" style="margin-bottom:12px">${tagsHtml}</div>
+      <div class="script-card-box">${s.script}</div>
+      <button class="script-copy-btn" onclick="copyScript(\`${s.script.replace(/`/g,"\`")}\`)">Copy Script</button>
+    </div>`;
+});
+if (CONFIG.generalScripts.filter(s=>s.enabled).length === 0) {
+  scriptsEl.innerHTML = `<div style="color:var(--text2);font-size:12px;grid-column:1/-1">No scripts available yet. Check back soon.</div>`;
 }
 
-// Game overlay
-function openGame(id) {
-  const g = GAMES[id];
-  if (!g) return;
+// Updates
+const updatesEl = document.getElementById("updatesList");
+CONFIG.updates.forEach(u => {
+  updatesEl.innerHTML += `
+    <div class="update-item">
+      <div class="update-date">${u.date}</div>
+      <div>
+        <div class="update-badge badge-${u.type}">${u.type.toUpperCase()}</div>
+        <div class="update-title">${u.title}</div>
+        <div class="update-desc">${u.desc}</div>
+      </div>
+    </div>`;
+});
+
+// ── GAME OVERLAY ──────────────────────────────────────────────────────────
+function openGame(i) {
+  const g = CONFIG.games[i];
+  if (!g || !g.enabled) return;
+  const script = g.customScript || CONFIG.universalScript;
   document.getElementById("overlayTitle").textContent = g.name;
-  document.getElementById("overlayMeta").textContent = g.meta;
+  document.getElementById("overlayMeta").textContent = "Updated " + CONFIG.lastUpdated + "  ·  Works on Delta, Arceus X  ·  Key required";
   document.getElementById("overlayFeatures").innerHTML = g.features.map(f =>
     `<div class="feature-item"><div class="feature-dot"></div><div class="feature-text">${f}</div></div>`
   ).join("");
+  document.getElementById("overlayScript").textContent = script;
+  document.getElementById("overlayScriptBtn").onclick = () => copyScript(script);
   document.getElementById("gameOverlay").classList.add("active");
   document.body.style.overflow = "hidden";
 }
-
 function closeGame() {
   document.getElementById("gameOverlay").classList.remove("active");
   document.body.style.overflow = "";
 }
 
-// Copy
-function copyScript() {
-  navigator.clipboard.writeText(SCRIPT).then(() => {
-    toast("Copied!", "Script copied to clipboard", "success");
-  }).catch(() => {
-    toast("Error", "Could not copy — copy manually", "error");
-  });
+// ── NAV ────────────────────────────────────────────────────────────────────
+function goPage(id) {
+  document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
+  document.querySelectorAll(".nav-link,.mobile-link").forEach(n => n.classList.remove("active"));
+  document.getElementById("page-"+id).classList.add("active");
+  const nb = document.getElementById("nav-"+id);
+  const mb = document.getElementById("mnav-"+id);
+  if (nb) nb.classList.add("active");
+  if (mb) mb.classList.add("active");
+  window.scrollTo(0, 0);
+}
+function toggleMenu() { document.getElementById("mobileMenu").classList.toggle("open"); }
+
+// ── COPY ───────────────────────────────────────────────────────────────────
+function copyScript(script) {
+  navigator.clipboard.writeText(script).then(() => toast("Copied!", "Script copied to clipboard")).catch(() => toast("Error", "Copy manually", "error"));
 }
 
-function joinDiscord() {
-  window.open(DISCORD, "_blank");
-}
-
-// Mobile menu
-function toggleMenu() {
-  document.getElementById("mobileMenu").classList.toggle("open");
-}
-
-// Toast
-function toast(title, msg, type = "success") {
+// ── TOAST ──────────────────────────────────────────────────────────────────
+function toast(title, msg, type="success") {
   const c = document.getElementById("toastContainer");
   const t = document.createElement("div");
-  t.className = `toast ${type}`;
+  t.className = "toast";
+  t.style.borderLeftColor = type==="error" ? "#ff4455" : "var(--accent)";
   t.innerHTML = `<strong style="display:block;margin-bottom:2px">${title}</strong>${msg}`;
   c.appendChild(t);
-  setTimeout(() => {
-    t.style.opacity = "0"; t.style.transform = "translateX(20px)";
-    t.style.transition = "all 0.3s";
-    setTimeout(() => t.remove(), 300);
-  }, 3000);
+  setTimeout(() => { t.style.opacity="0"; t.style.transform="translateX(18px)"; t.style.transition="all .3s"; setTimeout(()=>t.remove(),300); }, 3000);
 }
 
-// Custom cursor
-const cursor = document.getElementById("cursor");
+// ── CURSOR ─────────────────────────────────────────────────────────────────
+const cur = document.getElementById("cursor");
 const ring = document.getElementById("cursorRing");
-let mx = 0, my = 0, rx = 0, ry = 0;
-document.addEventListener("mousemove", e => { mx = e.clientX; my = e.clientY; cursor.style.left = mx + "px"; cursor.style.top = my + "px"; });
-(function animRing() {
-  rx += (mx - rx) * 0.12;
-  ry += (my - ry) * 0.12;
-  ring.style.left = rx + "px";
-  ring.style.top = ry + "px";
-  requestAnimationFrame(animRing);
-})();
-document.querySelectorAll("button,a,[onclick]").forEach(el => {
-  el.addEventListener("mouseenter", () => { cursor.style.width = "16px"; cursor.style.height = "16px"; ring.style.width = "44px"; ring.style.height = "44px"; ring.style.opacity = "0.6"; });
-  el.addEventListener("mouseleave", () => { cursor.style.width = "10px"; cursor.style.height = "10px"; ring.style.width = "32px"; ring.style.height = "32px"; ring.style.opacity = "0.4"; });
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener("mousemove", e => { mx=e.clientX; my=e.clientY; cur.style.left=mx+"px"; cur.style.top=my+"px"; });
+(function animRing(){ rx+=(mx-rx)*.12; ry+=(my-ry)*.12; ring.style.left=rx+"px"; ring.style.top=ry+"px"; requestAnimationFrame(animRing); })();
+document.querySelectorAll("button,a,[onclick]").forEach(e=> {
+  el.addEventListener("mouseenter",()=>{ cur.style.width="16px"; cur.style.height="16px"; });
+  el.addEventListener("mouseleave",()=>{ cur.style.width="10px"; cur.style.height="10px"; });
 });
 </script>
 </body>
