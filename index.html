@@ -29,6 +29,10 @@ const CONFIG = {
     { num: "Free",   label: "Always"          },
     { num: "v1.0",   label: "Current Version" },
     { num: "∞",      label: "No Mercy"        },
+    { num: "0",      label: "Supported games" },
+    { num: "24/7",   label: "Support"         },
+    { num: "6",      label: "Days of development"        },
+    { num: "Solo",      label: "Dev"        },
   ],
 
   // ── GAMES ──────────────────────────────────────────────
@@ -36,11 +40,11 @@ const CONFIG = {
   // customScript: null = uses universal script, string = shows its own script
   games: [
     {
-      enabled:      false,
+      enabled:     false,
       name:         "Murder Mystery 2",
       icon:         "🔪",
       desc:         "Coin farming, ESP, murderer detection, auto utilities and more.",
-      tags:         ["Farm", "ESP", "Combat", "Auto", "Soon"],
+      tags:         ["Farm", "ESP", "Combat", "Auto"],
       features:     [
         "Auto Coin Farm",
         "Avoid Murderer while farming",
@@ -84,6 +88,15 @@ const CONFIG = {
       features:     [],
       customScript: null,
     },
+    {
+      enabled:      true,
+      name:         "Games coming soon...",
+      icon:         "🔜",
+      desc:         "Coming soon. Join Discord for updates.",
+      tags:         ["Soon"],
+      features:     [],
+      customScript: null,
+    },
   ],
 
   // ── GENERAL SCRIPTS (Scripts tab) ──────────────────────
@@ -101,7 +114,7 @@ const CONFIG = {
       name:     "FrostedNetwork Troll Hub",
       desc:     "Speed, fly, noclip, fling, ESP and more. Works in any game.",
       script:   `loadstring(game:HttpGet("https://yourlinkhere"))()`,
-      tags:     ["Troll", "Universal", "Free", "Soon"],
+      tags:     ["Troll", "Universal", "Free"],
     },
     {
       enabled:  false,
@@ -116,10 +129,11 @@ const CONFIG = {
   // type: "new" | "update" | "fix" | "soon"
   updates: [
     {
-      date:  "Mar 19, 2026",
-      type:  "soon",
-      title: "FrostedNetwork first script release.",
-      desc:  "Frostclient mm2 script!!"
+      date:  "Mar 21, 2026",
+      type:  "Update",
+      title: "FrostedNetwork v1.0 — We are releasing scripts soon",
+      desc:  "The FrostedNetwork is empty right now, we are making scripts as you read this. releasing when we finish one. We can't find working UI libs at least for the executor i use (delta android), Planned games: MM2, Bloxfruits, NDS, Arsenal and more. we have so much planned. remember im a solo dev that halfway sucks at coding it may take a bit. join our discord for beta releases, thanks ~Rex",
+    },
   ],
 
 };
@@ -301,8 +315,8 @@ body::before{content:"";position:fixed;inset:0;background-image:linear-gradient(
     <button class="nav-link active" id="nav-home" onclick="goPage('home')">Home</button>
     <button class="nav-link" id="nav-games" onclick="goPage('games')">Games</button>
     <button class="nav-link" id="nav-scripts" onclick="goPage('scripts')">Scripts</button>
-    <button class="nav-link" id="nav-updates" onclick="goPage('updates')">Updates</button
-                                                                  <button class="nav-discord" id="navDiscordBtn">Discord</button>
+    <button class="nav-link" id="nav-updates" onclick="goPage('updates')">Updates</button>
+    <button class="nav-discord" id="navDiscordBtn">Discord</button>
   </div>
   <div class="hamburger" id="hamburger" onclick="toggleMenu()">
     <span></span><span></span><span></span>
@@ -538,7 +552,7 @@ const ring = document.getElementById("cursorRing");
 let mx=0,my=0,rx=0,ry=0;
 document.addEventListener("mousemove", e => { mx=e.clientX; my=e.clientY; cur.style.left=mx+"px"; cur.style.top=my+"px"; });
 (function animRing(){ rx+=(mx-rx)*.12; ry+=(my-ry)*.12; ring.style.left=rx+"px"; ring.style.top=ry+"px"; requestAnimationFrame(animRing); })();
-document.querySelectorAll("button,a,[onclick]").forEach(e=> {
+document.querySelectorAll("button,a,[onclick]").forEach(el => {
   el.addEventListener("mouseenter",()=>{ cur.style.width="16px"; cur.style.height="16px"; });
   el.addEventListener("mouseleave",()=>{ cur.style.width="10px"; cur.style.height="10px"; });
 });
